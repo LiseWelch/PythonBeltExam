@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import datetime
+from datetime import datetime, date
 import re
 
 class UserManager(models.Manager):
@@ -25,16 +25,17 @@ class UserManager(models.Manager):
 class ApptManager(models.Manager):
     def basic_validator(self, postData):
         errors = {}
-        cur_date = datetime.now().strftime('%Y-%m-%d')
+        cur_date = datetime.now()
         rel_date = datetime.strptime(postData['date'], '%Y-%m-%d')
         if len(postData['task']) < 5:
             errors['task'] = "Task must be at least 5 characters long"
-        if (postData['status'] == 'Pending') & (rel_date<cur_date):
-            errors['status'] = "Date must be in the future for pending tasks"
-        if (postData['status'] == 'Missed') & (rel_date>cur_date):
-            errors['status'] = "Date must be in the past for missed tasks"
-        if (postData['status'] == 'Done') & (rel_date>cur_date):
-            errors['status'] = "Date must be in the past for completed tasks"
+        else:
+            if (postData['status'] == 'Pending') & (rel_date<cur_date):
+                errors['status'] = "Date must be in the future for pending tasks"
+            if (postData['status'] == 'Missed') & (rel_date>cur_date):
+                errors['status'] = "Date must be in the past for missed tasks"
+            if (postData['status'] == 'Done') & (rel_date>cur_date):
+                errors['status'] = "Date must be in the past for completed tasks"
         return errors
         
 

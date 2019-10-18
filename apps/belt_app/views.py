@@ -10,8 +10,6 @@ def root(request) :
     return render(request, 'belt_app/login.html')
 
 def process(request) :
-    if 'userid' not in request.session:
-        return redirect('/')
     if request.POST['type']=="register" :
         request.session['type'] = "r"
         errors = User.objects.basic_validator(request.POST)
@@ -61,7 +59,10 @@ def logout(request) :
 def add_new(request) :
     if 'userid' not in request.session:
         return redirect('/')
-    return render(request, 'belt_app/new.html')
+    context = {
+        'cur_date': date.today()
+    }
+    return render(request, 'belt_app/new.html', context)
 
 def create(request) :
     if 'userid' not in request.session:
