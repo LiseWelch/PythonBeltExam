@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Edit Appointment</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <h1 class="m-4">Edit Appointment</h1>
+        <div class = "col-sm-3 mx-4 my-4">
+            {% if messages %}
+                <ul class="messages text-danger">
+                    {% for message in messages %}
+                        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <form action="/update/{{ appt.id }}" method="post">
+                {%  csrf_token %}
+                <div class = "form-group row">
+                    <div class="col-3">
+                    <label for="task">Task</label>
+                    </div>
+                    <div class="col-9">
+                    <input type="text" class="form-control" name="task" value="{{ appt.task }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
+                    <label for="date">Date</label>
+                    </div>
+                    <div class="col-9">
+                    <input type="date" class="form-control" name="date" value="{{ appt.date|date:'Y-m-d' }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label for="status">Status</label>
+                        </div>
+                        <div class="col-9">
+                        <select class="form-control" name="status" value="{{ appt.status }}">
+                          <option>Pending</option>
+                          <option>Missed</option>
+                          <option>Done</option>
+                        </select>
+                        </div>
+                      </div>
+                <div class="row justify-content-end">
+                    <button type="submit" class="btn btn-secondary mx-3">Update</button>
+                    </form>
+                    <a href="http://localhost:8000/appointments"><button type="button" class="btn btn-danger mx-3">Cancel</button></a>
+                </div>
+        </div>
+    </body>
+</html>

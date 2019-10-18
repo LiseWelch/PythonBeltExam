@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Add Appointment</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <h1 class="m-4">Add an Appointment</h1>
+        <div class = "col-sm-3 mx-4 my-4">
+            {% if messages %}
+                <ul class="messages text-danger">
+                    {% for message in messages %}
+                        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <form action="/create" method="post">
+                {%  csrf_token %}
+                <div class = "form-group row">
+                    <div class="col-3">
+                    <label for="task">Task</label>
+                    </div>
+                    <div class="col-9">
+                    <input type="text" class="form-control" name="task">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
+                    <label for="date">Date</label>
+                    </div>
+                    <div class="col-9">
+                    <input type="date" class="form-control" name="date">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label for="status">Status</label>
+                        </div>
+                        <div class="col-9">
+                        <select class="form-control" name="status">
+                          <option>Pending</option>
+                          <option>Missed</option>
+                          <option>Done</option>
+                        </select>
+                        </div>
+                      </div>
+                <div class="row justify-content-end">
+                    <button type="submit" class="btn btn-secondary mx-3">Add</button>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
